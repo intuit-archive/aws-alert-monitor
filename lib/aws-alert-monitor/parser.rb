@@ -12,11 +12,11 @@ module AwsAlertMonitor
     private
 
     def ses
-      @ses ||= AwsAlertMonitor::Aws::SES.new :config => @config
+      @ses ||= AwsAlertMonitor::AWS::SES.new :config => @config
     end
 
     def sqs
-      @sqs ||= AwsAlertMonitor::Aws::Sqs.new :config => @config
+      @sqs ||= AwsAlertMonitor::AWS::SQS.new :config => @config
     end
   end
 end

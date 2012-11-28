@@ -1,8 +1,10 @@
-require 'fog'
-
 module AwsAlertMonitor
-  module Aws
-    class Sqs
+  module AWS
+    class SQS
+
+      def initialize(args)
+        @config = args[:config]
+      end
 
       def receive_message(url)
         sqs.receive_message(url)
@@ -15,8 +17,8 @@ module AwsAlertMonitor
       private
 
       def sqs
-        @sqs ||= Fog::AWS::SQS.new :aws_access_key_id     => 'test',
-                                   :aws_access_access_key => 'test'
+        @sqs ||= Fog::AWS::SQS.new :aws_access_key_id     => @config.access_key,
+                                   :aws_access_access_key => @config.secret_key
       end
     end
   end
