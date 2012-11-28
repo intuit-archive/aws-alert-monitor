@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'aws-alert-monitor'
+require 'aws-alert-monitor/cli'
+
+AwsAlertMonitor::CLI.start
