@@ -4,21 +4,21 @@ module AwsAlertMonitor
 
       def initialize(args)
         @config = args[:config]
+        @logger = @config.logger
       end
 
       def receive_message(url)
-        sqs.receive_message(url)
+        queue(url).receive_message 
       end
 
-      def delete_message(queue_url, receipt_handle)
-        sqs.delete_message(queue_url, receipt_handle)
+      def approximate_number_of_messages(url)
+        queue(url).approximate_number_of_messages
       end
 
       private
 
-      def sqs
-        @sqs ||= Fog::AWS::SQS.new :aws_access_key_id     => @config.access_key,
-                                   :aws_access_access_key => @config.secret_key
+      def queue(url)
+        ::AWS::SQS::Queue.new url
       end
     end
   end

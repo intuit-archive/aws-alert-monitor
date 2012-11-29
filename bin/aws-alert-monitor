@@ -3,4 +3,4 @@
 require 'aws-alert-monitor'
 require 'aws-alert-monitor/cli'
 
-AwsAlertMonitor::CLI.start
+AwsAlertMonitor::CLI.new.start
