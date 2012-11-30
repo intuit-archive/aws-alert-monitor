@@ -9,26 +9,28 @@ module AwsAlertMonitor
     end
 
     def run
-      @config_file.keys.each do |key|
-        sqs_endpoint = @config_file[key]['sqs_endpoint']
-        access_key   = @config_file[key]['access_key']
-        secret_key   = @config_file[key]['secret_key']
-        events       = @config_file[key]['events']
+      @config_file.keys.each do |name|
+        sqs_endpoint = @config_file[name]['sqs_endpoint']
+        access_key   = @config_file[name]['access_key']
+        secret_key   = @config_file[name]['secret_key']
+        events       = @config_file[name]['events']
 
         ::AWS.config :access_key_id     => access_key,
                      :secret_access_key => secret_key
 
-        @logger.info "Processing #{key}."
+        @logger.info "Processing #{name}."
         @logger.debug "Receiving messages from #{sqs_endpoint}"
 
         count = sqs.approximate_number_of_messages sqs_endpoint
-        @logger.debug "Approximatley #{count} messages available."
+        @logger.info "Approximatley #{count} messages available."
 
         message = sqs.receive_message sqs_endpoint 
 
         if message
-          alert.process :message => message.body,
+          alert.process :name    => name,
+                        :message => message.body,
                         :events  => events
+          @logger.info "Deleting message from queue."
           message.delete
         end
       end

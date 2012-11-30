@@ -9,14 +9,18 @@ module AwsAlertMonitor
     end
 
     def process(args)
-      events  = args[:events]
-      message = args[:message]
+      @name    = args[:name]
+      @events  = args[:events]
+      @message = args[:message]
 
-      process_message message
+      unless process_message @message
+        @logger.error "Enable to process message."
+        return false
+      end
 
-      events.each_pair do |event, policy|
+      @events.each_pair do |event, policy|
         @logger.info "Evaluating '#{@message_event}' against '#{event}'"
-        send_alert policy if event == @message_event
+        send_alert(policy) if event == @message_event
       end
     end
 
@@ -31,11 +35,11 @@ module AwsAlertMonitor
       options = { :source      => message_source,
                   :destination => { :to_addresses => [ message_destination ] },
                   :message     => { :subject => {
-                                      :data => @message_subject
+                                      :data => "Alert: #{@name}"
                                     },
                                     :body    => {
                                       :text => {
-                                        :data => @message_cause
+                                        :data => @message_data
                                       }
                                     }
                                   } 
@@ -44,11 +48,20 @@ module AwsAlertMonitor
     end
 
     def process_message(message)
-      message_body    = JSON.parse message
-      message         = JSON.parse message_body['Message']
-      @message_cause   = message['Cause']
-      @message_event   = message['Event']
-      @message_subject = message['Description']
+      begin
+        message_body    = JSON.parse message
+        message         = JSON.parse message_body['Message']
+      rescue JSON::ParserError => e
+        @logger.error e.message
+        return false
+      end
+
+      @message_cause       = message['Cause']
+      @message_event       = message['Event']
+      @message_description = message['Description']
+      @message_data        = "#{@message_description} \n\n #{@message_cause}"
+
+      true
     end
 
     def ses

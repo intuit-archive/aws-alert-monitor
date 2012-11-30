@@ -16,6 +16,8 @@ describe AwsAlertMonitor::Parser do
     @alert_mock   = mock 'alert'
     @sqs_mock     = mock 'sqs'
     @message_mock = mock 'message'
+    ::AWS.should_receive(:config).with :access_key_id     => 'key',
+                                       :secret_access_key => 'secret'
     AwsAlertMonitor::Alert.should_receive(:new).
                            with(:config => @config_stub).
                            and_return @alert_mock
@@ -28,7 +30,7 @@ describe AwsAlertMonitor::Parser do
               and_return @message_mock
     @message_mock.stub :body => 'body'
     @alert_mock.should_receive(:process).
-                with({:message=>"body", :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com", "destination"=>"brett_weaver@intuit.com"}}}})
+                with({:name => "app", :message=>"body", :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com", "destination"=>"brett_weaver@intuit.com"}}}})
     @message_mock.should_receive(:delete)
     @parser.run
   end
