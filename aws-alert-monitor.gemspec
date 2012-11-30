@@ -17,5 +17,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_runtime_dependency 'aws-sdk'
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec', '~> 2.11.0'
+
+  gem.add_runtime_dependency 'aws-sdk', '~> 1.7.1'
 end

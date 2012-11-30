@@ -8,34 +8,33 @@ module AwsAlertMonitor
       @logger = @config.logger
     end
 
-    def process(body)
-      message_body = JSON.parse(body)
-      message = JSON.parse message_body['Message']
+    def process(args)
+      message_body    = JSON.parse args[:body]
+      message         = JSON.parse message_body['Message']
+      message_cause   = message['Cause']
+      message_event   = message['Event']
+      message_subject = message['Description']
 
-      source          = 'brett_weaver@intuit.com'
-      destination     = 'brett_weaver@intuit.com'
-      message_subject = 'this is atest'
+      events.each do |event|
+        if event['name'] == message_event
+          message_source      = event['source']
+          message_destination = event['destination']
 
-      p message['Service']
-      p message['Event']
-      p message['Cause']
-      p message['Description']
-      p message['AutoScalingGroupName']
+          options = { :source      => source,
+                      :destination => { :to_addresses => [ destination ] },
+                      :message     => { :subject => {
+                                          :data => message_subject
+                                        },
+                                        :body    => {
+                                          :text => {
+                                            :data => message_cause
+                                          }
+                                        }
+                                      } }
 
-      options = { :source      => source,
-                  :destination => { :to_addresses => [ destination ] },
-                  :message     => { :subject => {
-                                      :data => message_subject
-                                    },
-                                    :body    => {
-                                      :text => {
-                                        :data => message_body
-                                      }
-                                    }
-                                  } 
-                 }
-
-      ses.send_email options
+          ses.send_email options
+        end
+      end
     end
 
     private
