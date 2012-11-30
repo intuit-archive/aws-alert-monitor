@@ -10,18 +10,24 @@ module AwsAlertMonitor
 
     def process(args)
       message_body    = JSON.parse args[:body]
+      events          = args[:events]
       message         = JSON.parse message_body['Message']
       message_cause   = message['Cause']
       message_event   = message['Event']
       message_subject = message['Description']
 
-      events.each do |event|
-        if event['name'] == message_event
-          message_source      = event['source']
-          message_destination = event['destination']
+      events.each_pair do |event, policy|
 
-          options = { :source      => source,
-                      :destination => { :to_addresses => [ destination ] },
+        @logger.info "Evaluating #{message_event} against #{event}"
+
+        if event == message_event
+          message_source      = policy['email']['source']
+          message_destination = policy['email']['destination']
+
+          @logger.info "Sending alert to #{message_destination}."
+
+          options = { :source      => message_source,
+                      :destination => { :to_addresses => [ message_destination ] },
                       :message     => { :subject => {
                                           :data => message_subject
                                         },
