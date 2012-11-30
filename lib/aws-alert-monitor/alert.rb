@@ -14,7 +14,7 @@ module AwsAlertMonitor
       @message = args[:message]
 
       unless process_message @message
-        @logger.error "Enable to process message."
+        @logger.error "Unable to process message."
         return false
       end
 
