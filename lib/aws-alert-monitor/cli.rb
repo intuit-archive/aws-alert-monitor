@@ -7,7 +7,8 @@ module AwsAlertMonitor
     end
 
     def start
-      AwsAlertMonitor::Parser.new.run
+      parser = AwsAlertMonitor::Parser.new :log_level => @options[:log_level
+      parser.run
     end
 
     private
@@ -19,8 +20,8 @@ module AwsAlertMonitor
 
         opts.banner = "Usage: aws-alert-monitor.rb [options]"
 
-        opts.on("-s", "--sqs-queue-url [SQS_QUEUE_URL]", "SQS Queue URL") do |s|
-          options[:sqs_queue_url] = s
+        opts.on("-l", "--log-level [LOG_LEVEL]", "Log Level") do |l|
+          options[:log_level] = l
         end
       end.parse!
 

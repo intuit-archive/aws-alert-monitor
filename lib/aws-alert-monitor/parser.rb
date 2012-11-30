@@ -26,8 +26,8 @@ module AwsAlertMonitor
         message = sqs.receive_message sqs_endpoint 
 
         if message
-          alert.process :body   => message.body,
-                        :events => events
+          alert.process :message => message.body,
+                        :events  => events
           #message.delete
         end
       end
@@ -40,7 +40,7 @@ module AwsAlertMonitor
     end
 
     def sqs
-      @sqs ||= AwsAlertMonitor::AWS::SQS.new :config => @config
+      @sqs ||= AwsAlertMonitor::AWS::SQS.new
     end
   end
 end

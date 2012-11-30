@@ -1,14 +1,16 @@
 require 'spec_helper'
 require 'yaml'
 
-describe AwsAlertMontitor::Config do
+describe AwsAlertMonitor::Config do
   before do
-    @data = "lc-pod-2-qa-1-app-2:\n  access_key: key \n  secret_key: secret\n  region: us-west-1\n  sqs_endpoint: https://sqs.us-west-1.amazonaws.com/187130254137/lc-pod-2-qa-1-queue-2-Queue-NKE7QCNN0W6A\n  events: \n    'autoscaling:EC2_INSTANCE_LAUNCH':\n      email:\n        source: brett_weaver@intuit.com\n        destination: brett_weaver@intuit.com\n"
-    File.stub :open => @data
+    @data = "app:\n  access_key: key \n  secret_key: secret\n  region: us-west-1\n  sqs_endpoint: https://sqs.us-west-1.amazonaws.com/123456789012/app\n  events: \n    'autoscaling:EC2_INSTANCE_LAUNCH':\n      email:\n        source: brett_weaver@intuit.com\n        destination: brett_weaver@intuit.com\n"
+    File.should_receive(:open).
+         with("#{ENV['HOME']}/.aws-alert-monitor.yml").
+         and_return @data
   end
 
   it "should load the configuration from ~/.aws-alert-monitor.yml" do
-    @config = AwsAlertMontitor::Config.new
-    @config.file.should == YAML.parse(@data)
+    @config = AwsAlertMonitor::Config.new
+    @config.file.should == YAML.load(@data)
   end
 end

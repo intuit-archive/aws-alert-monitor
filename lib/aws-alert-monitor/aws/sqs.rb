@@ -2,11 +2,6 @@ module AwsAlertMonitor
   module AWS
     class SQS
 
-      def initialize(args)
-        @config = args[:config]
-        @logger = @config.logger
-      end
-
       def receive_message(url)
         queue(url).receive_message 
       end

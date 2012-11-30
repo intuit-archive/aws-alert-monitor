@@ -1,24 +1,39 @@
 # Aws::Alert::Monitor
 
-TODO: Write a gem description
+AWS Alert Monitor listenting to an SQS queue for alarms and sends email via SES based on rules applied in ~/.aws-alert-monitor.yml to those alerts.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'aws-alert-monitor'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install aws-alert-monitor
+gem install aws-alert-monitor
 
 ## Usage
 
-TODO: Write usage instructions here
+Add ~/.aws-alert-monitor.yml with the following syntax:
+
+```
+app1:
+  access_key: Key
+  secret_key: Secret
+  sqs_endpoint: https://sqs.us-west-1.amazonaws.com/123456789012/app1
+  events:
+    'autoscaling:EC2_INSTANCE_LAUNCH':
+      email:
+        source: admin@example.com
+        destination: user@escalation.com
+    'autoscaling:EC2_INSTANCE_TERMINATE':
+      email:
+        source: admin@example.com
+        destination: problem@escalation.com
+app2:
+  access_key: Key
+  secret_key: Secret
+  sqs_endpoint: https://sqs.us-west-1.amazonaws.com/123456789012/app2
+  events:
+    'autoscaling:EC2_INSTANCE_FAILED_LAUNCH':
+      email:
+        source: admin@example.com
+        destination: user@escalation.com
+```
 
 ## Contributing
 
