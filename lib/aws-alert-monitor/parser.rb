@@ -24,9 +24,8 @@ module AwsAlertMonitor
         count = sqs.approximate_number_of_messages sqs_endpoint
         @logger.info "Approximatley #{count} messages available."
 
-        message = sqs.receive_message sqs_endpoint 
 
-        if message
+        while message = sqs.receive_message(sqs_endpoint)
           alert.process :name    => name,
                         :message => message.body,
                         :events  => events

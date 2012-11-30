@@ -27,11 +27,16 @@ describe AwsAlertMonitor::Parser do
               and_return 1
     @sqs_mock.should_receive(:receive_message).
               with('https://sqs.us-west-1.amazonaws.com/123456789012/app').
+              exactly(2).times.
               and_return @message_mock
+    @sqs_mock.should_receive(:receive_message).
+              with('https://sqs.us-west-1.amazonaws.com/123456789012/app').
+              and_return false
     @message_mock.stub :body => 'body'
     @alert_mock.should_receive(:process).
-                with({:name => "app", :message=>"body", :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com", "destination"=>"brett_weaver@intuit.com"}}}})
-    @message_mock.should_receive(:delete)
+                with({:name => "app", :message=>"body", :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com", "destination"=>"brett_weaver@intuit.com"}}}}).
+                exactly(2).times
+    @message_mock.should_receive(:delete).exactly(2).times
     @parser.run
   end
 
