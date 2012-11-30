@@ -5,7 +5,8 @@ module AwsAlertMonitor
 
     def initialize(args={})
       @opts       = args[:opts] ||= Hash.new
-      self.logger = args.fetch :logger, AwsAlertMonitor::Logger.new
+      log_level   = args[:log_level]
+      self.logger = AwsAlertMonitor::Logger.new :log_level => log_level
       self.file   = load_config_file
     end
 

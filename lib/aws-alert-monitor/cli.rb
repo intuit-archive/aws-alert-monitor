@@ -7,7 +7,7 @@ module AwsAlertMonitor
     end
 
     def start
-      parser = AwsAlertMonitor::Parser.new :log_level => @options[:log_level
+      parser = AwsAlertMonitor::Parser.new :log_level => @options[:log_level]
       parser.run
     end
 

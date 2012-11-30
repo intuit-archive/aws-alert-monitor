@@ -9,7 +9,7 @@ describe AwsAlertMonitor::Parser do
     @config_stub = stub 'config', :logger => @logger_stub,
                                   :file   => YAML.load(data)
     AwsAlertMonitor::Config.stub :new => @config_stub
-    @parser = AwsAlertMonitor::Parser.new
+    @parser = AwsAlertMonitor::Parser.new :log_level => 'debug'
   end
 
   it "should run the parser against the given config" do
@@ -29,7 +29,7 @@ describe AwsAlertMonitor::Parser do
     @message_mock.stub :body => 'body'
     @alert_mock.should_receive(:process).
                 with({:message=>"body", :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com", "destination"=>"brett_weaver@intuit.com"}}}})
-    #@message_mock.should_receive(:delete)
+    @message_mock.should_receive(:delete)
     @parser.run
   end
 

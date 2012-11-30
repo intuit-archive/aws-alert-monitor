@@ -1,8 +1,9 @@
 module AwsAlertMonitor
   class Parser
 
-    def initialize
-      @config        = AwsAlertMonitor::Config.new
+    def initialize(args)
+      log_level      = args[:log_level]
+      @config        = AwsAlertMonitor::Config.new :log_level => log_level
       @config_file   = @config.file
       @logger        = @config.logger
     end
@@ -28,7 +29,7 @@ module AwsAlertMonitor
         if message
           alert.process :message => message.body,
                         :events  => events
-          #message.delete
+          message.delete
         end
       end
     end
