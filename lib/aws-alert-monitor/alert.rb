@@ -16,16 +16,11 @@ module AwsAlertMonitor
       destination     = 'brett_weaver@intuit.com'
       message_subject = 'this is atest'
 
-      p message
       p message['Service']
       p message['Event']
       p message['Cause']
       p message['Description']
       p message['AutoScalingGroupName']
-      #p message_body['Message']['Service']
-      #p message_body['Message']['Event']
-      #p message_body['Message']['Description']
-      exit 1
 
       options = { :source      => source,
                   :destination => { :to_addresses => [ destination ] },
