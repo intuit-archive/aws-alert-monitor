@@ -9,11 +9,11 @@ module AwsAlertMonitor
     end
 
     def run
-      @config_file.keys.each do |name|
-        sqs_endpoint = @config_file[name]['sqs_endpoint']
-        access_key   = @config_file[name]['access_key']
-        secret_key   = @config_file[name]['secret_key']
-        events       = @config_file[name]['events']
+      @config_file.each_pair do |name, data|
+        sqs_endpoint = data['sqs_endpoint']
+        access_key   = data['access_key']
+        secret_key   = data['secret_key']
+        events       = data['events']
 
         ::AWS.config :access_key_id     => access_key,
                      :secret_access_key => secret_key
@@ -23,7 +23,6 @@ module AwsAlertMonitor
 
         count = sqs.approximate_number_of_messages sqs_endpoint
         @logger.info "Approximatley #{count} messages available."
-
 
         while message = sqs.receive_message(sqs_endpoint)
           alert.process :name    => name,
