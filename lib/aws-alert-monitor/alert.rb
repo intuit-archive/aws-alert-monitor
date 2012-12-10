@@ -46,6 +46,8 @@ module AwsAlertMonitor
                                     } 
                   }
         ses.send_email options
+      else
+        @logger.info "Destination not set, no message sent."
       end
     end
 
