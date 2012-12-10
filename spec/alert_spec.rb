@@ -26,4 +26,10 @@ describe AwsAlertMonitor::Alert do
     @alert.process(@options).should be_false
   end
 
+  it "should not send the message if the destination is nil" do
+    @ses_mock.should_receive(:send_email).never
+    @options = {:name => 'test app', :message=>@message, :events=>{"autoscaling:EC2_INSTANCE_LAUNCH"=>{"email"=>{"source"=>"brett_weaver@intuit.com"}}}}
+    @alert.process(@options).should be_true
+  end
+
 end

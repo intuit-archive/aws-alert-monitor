@@ -30,21 +30,23 @@ module AwsAlertMonitor
       message_source      = policy['email']['source']
       message_destination = policy['email']['destination']
 
-      @logger.info "Sending alert to #{message_destination}."
+      if message_destination
+        @logger.info "Sending alert to #{message_destination}."
 
-      options = { :source      => message_source,
-                  :destination => { :to_addresses => [ message_destination ] },
-                  :message     => { :subject => {
-                                      :data => "Alert: #{@name}"
-                                    },
-                                    :body    => {
-                                      :text => {
-                                        :data => @message_data
+        options = { :source      => message_source,
+                    :destination => { :to_addresses => [ message_destination ] },
+                    :message     => { :subject => {
+                                        :data => "Alert: #{@name}"
+                                      },
+                                      :body    => {
+                                        :text => {
+                                          :data => @message_data
+                                        }
                                       }
-                                    }
-                                  } 
-                }
-      ses.send_email options
+                                    } 
+                  }
+        ses.send_email options
+      end
     end
 
     def process_message(message)
