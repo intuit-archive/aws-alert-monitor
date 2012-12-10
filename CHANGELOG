@@ -1,6 +1,6 @@
-## HEAD:
+## 0.0.2:
 
-Don't send message if destination is nil
+* Don't send message if destination is nil
 
 ## 0.0.1:
 
