@@ -1,3 +1,7 @@
+## 0.0.4:
+
+* Updated email message format and content
+
 ## 0.0.3:
 
 * Log message if destination set to nil
