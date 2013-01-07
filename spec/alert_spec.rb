@@ -16,7 +16,7 @@ describe AwsAlertMonitor::Alert do
 
   it "should process the given message against known events" do
     @ses_mock.should_receive(:send_email)
-             .with({:source=>"brett_weaver@intuit.com", :destination=>{:to_addresses=>["brett_weaver@intuit.com"]}, :message=>{:subject=>{:data=>"Alert: test app"}, :body=>{:text=>{:data=>"Launching a new EC2 instance: i-d6a2cb8f \n\n At 2012-11-29T16:39:05Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1."}}}})
+             .with({:source=>"brett_weaver@intuit.com", :destination=>{:to_addresses=>["brett_weaver@intuit.com"]}, :message=>{:subject=>{:data=>"Alert: Auto Scaling: launch for group \"lc-pod-2-qa-1-app-1-Instances-XCYGCEQC0H02\""}, :body=>{:text=>{:data=>"test app received alert: \n\n Launching a new EC2 instance: i-d6a2cb8f \n\n At 2012-11-29T16:39:05Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1."}}}})
     @alert.process @options
   end
 
