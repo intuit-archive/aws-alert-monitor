@@ -36,7 +36,7 @@ module AwsAlertMonitor
         options = { :source      => message_source,
                     :destination => { :to_addresses => [ message_destination ] },
                     :message     => { :subject => {
-                                        :data => "Alert: #{@name}"
+                                        :data => "Alert: #{@message_subject}"
                                       },
                                       :body    => {
                                         :text => {
@@ -63,7 +63,8 @@ module AwsAlertMonitor
       @message_cause       = message['Cause']
       @message_event       = message['Event']
       @message_description = message['Description']
-      @message_data        = "#{@message_description} \n\n #{@message_cause}"
+      @message_subject     = message_body['Subject']
+      @message_data        = "#{@name} received alert: \n\n #{@message_description} \n\n #{@message_cause}"
 
       true
     end
