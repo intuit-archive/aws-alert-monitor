@@ -27,43 +27,46 @@ module AwsAlertMonitor
     private
 
     def send_alert(policy)
-      message_source      = policy['email']['source']
-      message_destination = policy['email']['destination']
+      @message_source      = policy['email']['source']
+      @message_destination = policy['email']['destination']
 
-      if message_destination
-        @logger.info "Sending alert to #{message_destination}."
-
-        options = { :source      => message_source,
-                    :destination => { :to_addresses => [ message_destination ] },
-                    :message     => { :subject => {
-                                        :data => "Alert: #{@name}"
-                                      },
-                                      :body    => {
-                                        :text => {
-                                          :data => @message_data
-                                        }
-                                      }
-                                    } 
-                  }
-        ses.send_email options
+      if @message_destination
+        @logger.info "Sending alert to #{@message_destination}."
+        ses.send_email email_options
       else
         @logger.info "Destination not set, no message sent."
       end
     end
 
+    def email_options
+      { :source      => @message_source,
+        :destination => { :to_addresses => [ @message_destination ] },
+        :message     => { :subject => {
+                            :data => "Alert: #{@message_subject}"
+                          },
+                          :body    => {
+                            :text => {
+                              :data => @message_data
+                            }
+                          }
+                        } 
+      }
+    end
+
     def process_message(message)
       begin
         message_body    = JSON.parse message
-        message         = JSON.parse message_body['Message']
+        message_details = JSON.parse message_body['Message']
       rescue JSON::ParserError => e
         @logger.error e.message
         return false
       end
 
-      @message_cause       = message['Cause']
-      @message_event       = message['Event']
-      @message_description = message['Description']
-      @message_data        = "#{@message_description} \n\n #{@message_cause}"
+      @message_cause       = message_details['Cause']
+      @message_event       = message_details['Event']
+      @message_description = message_details['Description']
+      @message_subject     = message_body['Subject']
+      @message_data        = "#{@name} received alert: \n\n #{@message_description} \n\n #{@message_cause}"
 
       true
     end
