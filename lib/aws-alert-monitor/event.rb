@@ -15,7 +15,7 @@ module AwsAlertMonitor
     end
 
     def subject
-      raise NotImplementedError
+      @raw_data['Subject']
     end
 
     def type
