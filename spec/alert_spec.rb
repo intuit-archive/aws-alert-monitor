@@ -5,8 +5,13 @@ describe AwsAlertMonitor::Alert do
     @message = fixture_file 'asg_instance_launch.json'
     @options = { :name    => 'test app',
                  :message => @message,
-                 :events  => { 'autoscaling:EC2_INSTANCE_LAUNCH' =>
-                               { 'email' => { 'source' => 'bob_weaver@intuit.com', 'destination'=>"brett_weaver@intuit.com"}}}}
+                 :events  => {
+                   'autoscaling:EC2_INSTANCE_LAUNCH' => {
+                     'email' => {
+                       'source'      => 'bob_weaver@intuit.com',
+                       'destination' => 'brett_weaver@intuit.com'
+                  } } }
+    }
 
     @logger_stub  = stub 'logger', :debug => true,
                                    :info  => true,

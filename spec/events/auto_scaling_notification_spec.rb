@@ -7,13 +7,20 @@ describe AwsAlertMonitor::Events::AutoScalingNotification do
 
   describe 'body' do
     it 'returns the body' do
-      event.body.should == "received alert: \n\n Launching a new EC2 instance: i-d6a2cb8f \n\n At 2012-11-29T16:39:05Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1."
+      data = "received alert: \n\n "
+      data << "Launching a new EC2 instance: i-d6a2cb8f \n\n "
+      data << "At 2012-11-29T16:39:05Z an instance was started in response to a"
+      data << " difference between desired and actual capacity,"
+      data << " increasing the capacity from 0 to 1."
+      event.body.should == data
     end
   end
 
   describe 'subject' do
     it 'returns the subject' do
-      event.subject.should == 'Alert: Auto Scaling: launch for group "lc-pod-2-qa-1-app-1-Instances-XCYGCEQC0H02"'
+      data = 'Alert: Auto Scaling: launch for group '
+      data << '"lc-pod-2-qa-1-app-1-Instances-XCYGCEQC0H02"'
+      event.subject.should == data
     end
   end
 
