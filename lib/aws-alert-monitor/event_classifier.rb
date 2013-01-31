@@ -10,8 +10,8 @@ module AwsAlertMonitor
       event_subjects_classes.each do |subject, klass|
         return klass.new(@message) if generic_event_subject =~ subject
       end
-      # TODO add unknown event type
-      return nil
+
+      unknown_event_class.new @message
     end
 
     private
@@ -24,6 +24,10 @@ module AwsAlertMonitor
 
     def generic_event_subject
       AwsAlertMonitor::Event.new(@message).subject
+    end
+
+    def unknown_event_class
+      AwsAlertMonitor::Events::Unknown
     end
 
   end
