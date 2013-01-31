@@ -13,15 +13,23 @@ describe AwsAlertMonitor::Alert do
                                    :error => true
     @config_stub  = stub 'config', :logger => @logger_stub
     @emailer_mock = mock 'emailer'
-    @data = { 'body' => "test app received alert: \n\n Launching a new EC2 instance: i-d6a2cb8f \n\n At 2012-11-29T16:39:05Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1.",
+
+    @data = { 'body' => "test app received alert: foo",
               'from' => 'bob_weaver@intuit.com',
-              'subject' => "Alert: Auto Scaling: launch for group \"lc-pod-2-qa-1-app-1-Instances-XCYGCEQC0H02\"",
+              'subject' => "Alert: Auto Scaling: launch for bar",
               'to' => ['brett_weaver@intuit.com'] }
     AwsAlertMonitor::Config.stub :new => @config_stub
     @alert = AwsAlertMonitor::Alert.new :config => @config_stub
   end
 
   it "should process the given message against known events" do
+    @event_stub      = stub 'event', :body    => "received alert: foo",
+                                     :subject => "Alert: Auto Scaling: launch for bar",
+                                     :type    => 'autoscaling:EC2_INSTANCE_LAUNCH'
+    @classifier_stub = stub 'classifier', :event => @event_stub
+    AwsAlertMonitor::EventClassifier.should_receive(:new).
+                                     with(@message).
+                                     and_return(@classifier_stub)
     AwsAlertMonitor::Emailer.should_receive(:new).
                              with(@data).
                              and_return(@emailer_mock)
