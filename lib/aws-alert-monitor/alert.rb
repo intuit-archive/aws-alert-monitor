@@ -32,24 +32,18 @@ module AwsAlertMonitor
 
       if @message_destination
         @logger.info "Sending alert to #{@message_destination}."
-        ses.send_email email_options
+        send_email
       else
         @logger.info "Destination not set, no message sent."
       end
     end
 
     def email_options
-      { :source      => @message_source,
-        :destination => { :to_addresses => [ @message_destination ] },
-        :message     => { :subject => {
-                            :data => "Alert: #{@message_subject}"
-                          },
-                          :body    => {
-                            :text => {
-                              :data => @message_data
-                            }
-                          }
-                        } 
+      {
+        'body'    => @message_data,
+        'from'    => @message_source,
+        'subject' => @message_subject,
+        'to'      => Array(@message_destination)
       }
     end
 
@@ -65,14 +59,15 @@ module AwsAlertMonitor
       @message_cause       = message_details['Cause']
       @message_event       = message_details['Event']
       @message_description = message_details['Description']
-      @message_subject     = message_body['Subject']
+      @message_subject     = "Alert: #{message_body['Subject']}"
       @message_data        = "#{@name} received alert: \n\n #{@message_description} \n\n #{@message_cause}"
 
       true
     end
 
-    def ses
-      @ses ||= AwsAlertMonitor::AWS::SES.new
+    def send_email
+      AwsAlertMonitor::Emailer.new(email_options).send_email
     end
+
   end
 end
