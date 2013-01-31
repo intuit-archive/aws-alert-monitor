@@ -7,7 +7,7 @@ module AwsAlertMonitor
 
     def initialize(message)
       @raw_data     = JSON.parse(message)
-      @message_data = JSON.parse(@raw_data['Message'])
+      @message_data = determine_message_data
     end
 
     def body
@@ -20,6 +20,11 @@ module AwsAlertMonitor
 
     def type
       raise NotImplementedError
+    end
+
+    private
+    def determine_message_data
+      JSON.parse(@raw_data.fetch('Message', '{}'))
     end
 
   end
