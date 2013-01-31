@@ -37,6 +37,29 @@ app2:
         destination: user@escalation.com
 ```
 
+### Supported Event Types
+Currently, this gem supports the following event types:
+
+#### Auto Scaling
+* autoscaling:EC2_INSTANCE_LAUNCH
+* autoscaling:EC2_INSTANCE_LAUNCH_ERROR
+* autoscaling:EC2_INSTANCE_TERMINATE
+* autoscaling:EC2_INSTANCE_TERMINATE_ERROR
+
+#### CloudWatch
+Cloud watch support is somewhat generic. The event pattern is: ```cloudwatch:$metric_namespage-$metric_name```
+
+For example:
+```
+cloudwatch:AWS/SQS-ApproximateNumberOfMessagesVisible
+```
+
+#### Unknown
+If a message does not one of the above types, then it will be classified as unknown.
+
+You can control the notification of these messages with:
+* unknown
+
 ## Contributing
 
 1. Fork it
