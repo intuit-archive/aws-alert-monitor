@@ -4,7 +4,7 @@ module AwsAlertMonitor
     class Unknown < Event
 
       def body
-        raw_data.to_s
+        "received an alert: \n\n #{raw_data.to_s}"
       end
 
       def subject

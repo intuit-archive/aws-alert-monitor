@@ -7,7 +7,9 @@ describe AwsAlertMonitor::Events::Unknown do
 
   describe 'body' do
     it 'returns the body' do
-      event.body.should == JSON.parse(message).to_s
+      data = "received an alert: \n\n "
+      data << JSON.parse(message).to_s
+      event.body.should == data
     end
   end
 
