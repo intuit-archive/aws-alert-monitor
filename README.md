@@ -47,7 +47,10 @@ Currently, this gem supports the following event types:
 * autoscaling:EC2_INSTANCE_TERMINATE_ERROR
 
 #### CloudWatch
-Cloud watch support is somewhat generic. The event pattern is: ```cloudwatch:$metric_namespage-$metric_name```
+Cloud watch support is somewhat generic. The event pattern is:
+```
+cloudwatch:$metric_namespage-$metric_name
+```
 
 For example:
 ```
