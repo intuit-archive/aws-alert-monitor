@@ -1,13 +1,25 @@
 require 'spec_helper'
 
 describe AwsAlertMonitor::EventClassifier do
-  let(:message) { fixture_file('asg_instance_launch.json') }
-  let(:classifier) { AwsAlertMonitor::EventClassifier.new message }
 
   describe 'event' do
 
-    it 'returns the appropriate event object' do
-      classifier.event.type.should == 'autoscaling:EC2_INSTANCE_LAUNCH'
+    context 'auto scaling notification' do
+      let(:message) { fixture_file('asg_instance_launch.json') }
+      let(:classifier) { AwsAlertMonitor::EventClassifier.new message }
+
+      it 'returns the appropriate event object' do
+        classifier.event.type.should == 'autoscaling:EC2_INSTANCE_LAUNCH'
+      end
+    end
+
+    context 'cloud watch alarm' do
+      let(:message) { fixture_file('cloud_watch_alarm.json') }
+      let(:classifier) { AwsAlertMonitor::EventClassifier.new message }
+
+      it 'returns the appropriate event object' do
+        classifier.event.type.should == 'cloudwatch:AWS/SQS-ApproximateNumberOfMessagesVisible'
+      end
     end
 
   end

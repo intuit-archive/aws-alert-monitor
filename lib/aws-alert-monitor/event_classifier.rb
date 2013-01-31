@@ -10,12 +10,15 @@ module AwsAlertMonitor
       event_subjects_classes.each do |subject, klass|
         return klass.new(@message) if generic_event_subject =~ subject
       end
+      # TODO add unknown event type
+      return nil
     end
 
     private
     def event_subjects_classes
       {
-        /\AAuto Scaling: / => AwsAlertMonitor::Events::AutoScalingNotification
+        /\AAuto Scaling: / => AwsAlertMonitor::Events::AutoScalingNotification,
+        /\AALARM: /        => AwsAlertMonitor::Events::CloudWatchAlarm
       }
     end
 
