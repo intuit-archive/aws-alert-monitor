@@ -49,7 +49,7 @@ Currently, this gem supports the following event types:
 #### CloudWatch
 Cloud watch support is somewhat generic. The event pattern is:
 ```
-cloudwatch:$metric_namespage-$metric_name
+cloudwatch:$metric_namespace-$metric_name
 ```
 
 For example:
