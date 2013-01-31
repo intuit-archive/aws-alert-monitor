@@ -61,7 +61,9 @@ cloudwatch:AWS/SQS-ApproximateNumberOfMessagesVisible
 If a message does not match one of the above types, then it will be classified as unknown.
 
 You can control the notification of these messages with:
-* unknown
+```
+unknown
+```
 
 ## Contributing
 
