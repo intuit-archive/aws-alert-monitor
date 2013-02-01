@@ -4,7 +4,7 @@ module AwsAlertMonitor
     class CloudWatchAlarm < Event
 
       def body
-        message = "received alert: \n\n #{alarm_description} \n\n"
+        message = "received an alert: \n\n #{alarm_description} \n\n"
         message << " #{alarm_new_state_reason} \n\n"
         message << " At #{alarm_state_change_time}"
       end

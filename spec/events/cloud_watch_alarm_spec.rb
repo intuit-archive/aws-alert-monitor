@@ -7,7 +7,7 @@ describe AwsAlertMonitor::Events::CloudWatchAlarm do
 
   describe 'body' do
     it 'returns the body' do
-      data = "received alert: \n\n "
+      data = "received an alert: \n\n "
       data << "Queue depth alarm for LC notification queue \n\n "
       data << "Threshold Crossed: 1 datapoint (3.0) was greater than the threshold (2.0). \n\n "
       data << "At 2013-01-30T22:00:50.630+0000"

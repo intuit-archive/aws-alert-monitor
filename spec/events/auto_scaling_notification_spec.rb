@@ -7,7 +7,7 @@ describe AwsAlertMonitor::Events::AutoScalingNotification do
 
   describe 'body' do
     it 'returns the body' do
-      data = "received alert: \n\n "
+      data = "received an alert: \n\n "
       data << "Launching a new EC2 instance: i-d6a2cb8f \n\n "
       data << "At 2012-11-29T16:39:05Z an instance was started in response to a"
       data << " difference between desired and actual capacity,"

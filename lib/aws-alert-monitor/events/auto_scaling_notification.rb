@@ -6,7 +6,7 @@ module AwsAlertMonitor
       def body
         cause       = message_data['Cause']
         description = message_data['Description']
-        "received alert: \n\n #{description} \n\n #{cause}"
+        "received an alert: \n\n #{description} \n\n #{cause}"
       end
 
       def subject
