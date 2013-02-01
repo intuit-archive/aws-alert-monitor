@@ -1,0 +1,12 @@
+{
+  "Type" : "Notification",
+  "MessageId" : "0d03bb25-7963-586d-a3f8-f2a6e3313939",
+  "TopicArn" : "arn:aws:sns:us-west-1:187130254137:lc-pod-2-dev-1-sns-1-SnsTopic-DGIM8J5SCVDG",
+  "Subject" : "ALARM: \"lc-pod-2-dev-1-alarm-1-QueueDepthAlarm-706AQ69BSSN1\" in US - N.California",
+  "Message" : "{\"AlarmName\":\"lc-pod-2-dev-1-alarm-1-QueueDepthAlarm-706AQ69BSSN1\",\"AlarmDescription\":\"Queue depth alarm for LC notification queue\",\"AWSAccountId\":\"187130254137\",\"NewStateValue\":\"ALARM\",\"NewStateReason\":\"Threshold Crossed: 1 datapoint (3.0) was greater than the threshold (2.0).\",\"StateChangeTime\":\"2013-01-30T22:00:50.630+0000\",\"Region\":\"US - N.California\",\"OldStateValue\":\"OK\",\"Trigger\":{\"MetricName\":\"ApproximateNumberOfMessagesVisible\",\"Namespace\":\"AWS/SQS\",\"Statistic\":\"SUM\",\"Unit\":null,\"Dimensions\":[{\"name\":\"QueueName\",\"value\":\"lc-pod-2-dev-1-queue-1-Queue-C32KYYWGN6DB\"}],\"Period\":300,\"EvaluationPeriods\":1,\"ComparisonOperator\":\"GreaterThanThreshold\",\"Threshold\":2.0}}",
+  "Timestamp" : "2013-01-30T22:00:50.696Z",
+  "SignatureVersion" : "1",
+  "Signature" : "o/vsl17zKfS66pxv8r01L1uTdEcJucoE5IOIm/p+PlevVx9DY9QoBr8Yg0JQy9H3LRNHqM+Lp8z9L91H5Fw5FHn0lRS3n1m0i6C7pjqXWvmXl8SFHka2xyL72oTolKuCI5yzW3n4KC0gVyZgJj2nKO3CBR0uGoFGbqLX2tleoaI=",
+  "SigningCertURL" : "https://sns.us-west-1.amazonaws.com/SimpleNotificationService-f3ecfb7224c7233fe7bb5f59f96de52f.pem",
+  "UnsubscribeURL" : "https://sns.us-west-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-1:187130254137:lc-pod-2-dev-1-sns-1-SnsTopic-DGIM8J5SCVDG:01eb3494-4be6-4b06-b3b2-a59a0d19d1ad"
+}

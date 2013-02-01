@@ -5,8 +5,9 @@
 AWS Alert Monitor listenting to an SQS queue for alarms and sends email via SES based on rules applied in ~/.aws-alert-monitor.yml to those alerts.
 
 ## Installation
-
+```
 gem install aws-alert-monitor
+```
 
 ## Usage
 
@@ -35,6 +36,34 @@ app2:
       email:
         source: admin@example.com
         destination: user@escalation.com
+```
+
+### Supported Event Types
+Currently, this gem supports the following event types:
+
+#### Auto Scaling
+* autoscaling:EC2_INSTANCE_LAUNCH
+* autoscaling:EC2_INSTANCE_LAUNCH_ERROR
+* autoscaling:EC2_INSTANCE_TERMINATE
+* autoscaling:EC2_INSTANCE_TERMINATE_ERROR
+
+#### CloudWatch
+Cloud watch support is somewhat generic. The event pattern is:
+```
+cloudwatch:$metric_namespace-$metric_name
+```
+
+For example:
+```
+cloudwatch:AWS/SQS-ApproximateNumberOfMessagesVisible
+```
+
+#### Unknown
+If a message does not match one of the above types, then it will be classified as unknown.
+
+You can control the notification of these messages with:
+```
+unknown
 ```
 
 ## Contributing
