@@ -1,3 +1,8 @@
+## 0.0.5:
+
+* Internal refactor
+* Added support for generic cloud watch alarms
+
 ## 0.0.4:
 
 * Updated email message format and content
