@@ -1,3 +1,7 @@
+## head:
+
+* Add support for `process_down` event
+
 ## 0.0.5:
 
 * Internal refactor
