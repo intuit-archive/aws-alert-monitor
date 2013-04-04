@@ -18,7 +18,8 @@ module AwsAlertMonitor
     def event_subjects_classes
       {
         /\AAuto Scaling: / => AwsAlertMonitor::Events::AutoScalingNotification,
-        /\AALARM: /        => AwsAlertMonitor::Events::CloudWatchAlarm
+        /\AALARM: /        => AwsAlertMonitor::Events::CloudWatchAlarm,
+        /\Aprocess_down/   => AwsAlertMonitor::Events::ProcessDown
       }
     end
 
