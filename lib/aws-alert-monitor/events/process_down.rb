@@ -12,7 +12,7 @@ module AwsAlertMonitor
       end
 
       def subject
-        "Alert: process #{process_name} down #{environment}"
+        "Alert: process #{process} down #{environment}"
       end
 
       def type
@@ -20,32 +20,12 @@ module AwsAlertMonitor
       end
 
       private
-      def created_at
-        message_data['created_at']
+      %w[created_at environment host required_count running_count process].each do |m|
+        define_method(m) { message_data[m] }
       end
 
       def description
         message_data['body']
-      end
-
-      def environment
-        message_data['environment']
-      end
-
-      def host
-        message_data['host']
-      end
-
-      def required_count
-        message_data['required_count']
-      end
-
-      def running_count
-        message_data['running_count']
-      end
-
-      def process_name
-        message_data['process']
       end
 
     end
