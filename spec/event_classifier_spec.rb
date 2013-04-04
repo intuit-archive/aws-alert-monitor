@@ -22,6 +22,15 @@ describe AwsAlertMonitor::EventClassifier do
       end
     end
 
+    context 'process down' do
+      let(:message) { fixture_file('process_down.json') }
+      let(:classifier) { AwsAlertMonitor::EventClassifier.new message }
+
+      it 'returns the appropriate event object' do
+        classifier.event.type.should == 'process_down'
+      end
+    end
+
     context 'unknown' do
       let(:message) { '{ "foo": "bar" }'}
       let(:classifier) { AwsAlertMonitor::EventClassifier.new message }
