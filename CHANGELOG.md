@@ -1,5 +1,7 @@
 ## head:
 
+## 0.1.0 (04/06/2013):
+
 * Add support for `process_down` event
 
 ## 0.0.5:
