@@ -1,9 +1,5 @@
 ## head:
 
-## 0.2.0 (08/26/2013):
-
-* Add support for Ruby 2.0.0
-
 ## 0.1.0 (04/06/2013):
 
 * Add support for `process_down` event
