@@ -1,5 +1,9 @@
 [![Build Status](https://secure.travis-ci.org/intuit/aws-alert-monitor.png)](http://travis-ci.org/intuit/aws-alert-monitor)
 
+**aws-alert-monitor is in maintenance mode!**
+
+**We will continue to provide best effor support for bug fix requests, however new features will not be added.**
+
 ## AWS Alert Monitor
 
 AWS Alert Monitor listenting to an SQS queue for alarms and sends email via SES based on rules applied in ~/.aws-alert-monitor.yml to those alerts.
