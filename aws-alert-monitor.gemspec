@@ -6,8 +6,8 @@ require 'aws-alert-monitor/version'
 Gem::Specification.new do |gem|
   gem.name          = "aws-alert-monitor"
   gem.version       = AwsAlertMonitor::VERSION
-  gem.authors       = ["Brett Weaver"]
-  gem.email         = ["brett@weav.net"]
+  gem.authors       = ["Intuit Inc."]
+  gem.email         = ["CTO-DevOpenSource@intuit.com"]
   gem.description   = %q{I watch an SQS queue and escalate alert messages.}
   gem.summary       = %q{I watch an SQS queue and escalate alert messages.}
   gem.homepage      = ""
