@@ -22,6 +22,7 @@ app1:
   access_key: Key
   secret_key: Secret
   sqs_endpoint: https://sqs.us-west-1.amazonaws.com/123456789012/app1
+  proxy_uri: http://my.proxy.com/
   events:
     'autoscaling:EC2_INSTANCE_LAUNCH':
       email:

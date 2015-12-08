@@ -15,8 +15,14 @@ module AwsAlertMonitor
         secret_key   = data['secret_key']
         events       = data['events']
 
-        ::AWS.config :access_key_id     => access_key,
-                     :secret_access_key => secret_key
+        params = {
+          :access_key_id     => access_key,
+          :secret_access_key => secret_key
+        }
+
+        params[:proxy_uri] = data['proxy_uri'] if data['proxy_uri']
+
+        ::AWS.config params
 
         @logger.info "Processing #{name}."
         @logger.debug "Receiving messages from #{sqs_endpoint}"
