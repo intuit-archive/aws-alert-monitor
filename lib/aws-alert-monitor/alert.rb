@@ -21,7 +21,7 @@ module AwsAlertMonitor
       @events.each_pair do |event, policy|
         @logger.info "Evaluating '#{@message_event}' against '#{event}'"
         send_alert(policy) if event == @message_event
-      end
+      end if @events
     end
 
     private
