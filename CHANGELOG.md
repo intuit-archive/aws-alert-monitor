@@ -1,5 +1,9 @@
 ## head:
 
+## 0.2.0
+
+* Add support for http proxies
+
 ## 0.1.0 (04/06/2013):
 
 * Add support for `process_down` event
